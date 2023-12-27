@@ -1,0 +1,60 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+.poem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.poem-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.poem-title {
+  font-size: 2.25rem;
+  /* 36px */
+  line-height: 2.5rem;
+  /* 40px */
+}
+
+.poem-body {
+  display: flex;
+  flex-direction: column;
+  white-space: pre;
+  gap: 0.25rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fade-text {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.poem-line {
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  animation: fade-text 3s;
+}
