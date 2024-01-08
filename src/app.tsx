@@ -17,7 +17,7 @@ async function* fetchPoem(): AsyncGenerator<string> {
     });
 
   for (const line of POEM.split('\n')) {
-    yield await sleep(line, 1000);
+    yield await sleep(line, 500);
   }
 }
 
@@ -30,9 +30,12 @@ function LineIterator(props: LineIteratorProps) {
 
   createEffect(() => {
     const currentSource = props.source;
+    console.log('source', currentSource);
     if (currentSource) {
+      setItems([]);
       (async () => {
         for await (const line of currentSource) {
+          console.log('current', line);
           setItems(current => [...current, line]);
         }
       })();
@@ -45,12 +48,21 @@ function LineIterator(props: LineIteratorProps) {
 }
 
 export default function App() {
-  const [data] = createResource(fetchPoem);
+  const [track, setTrack] = createSignal();
+  const [data] = createResource(track, fetchPoem);
+
+  function start() {
+    setTrack({});
+  }
+
   return (
     <main class="poem">
       <div class="poem-header">
         <h1 class="poem-title">The Raven</h1>
         <span class="poem-sub">By: Edgar Allan Poe</span>
+        <button type="button" onClick={start}>
+          Start
+        </button>
       </div>
       <div class="poem-body">
         <Suspense>
