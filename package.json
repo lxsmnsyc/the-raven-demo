@@ -7,13 +7,16 @@
     "start": "node ./.output/server/index.mjs"
   },
   "dependencies": {
-    "@solidjs/start": "^0.4.4",
-    "solid-js": "^1.8.8",
+    "@solidjs/start": "^0.4.8",
+    "solid-js": "^1.8.10",
     "vinxi": "0.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.4.1",
     "typescript": "^5.3.3"
+  },
+  "resolutions": {
+    "seroval": "^1.0.4"
   },
   "engines": {
     "node": ">=18"

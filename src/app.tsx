@@ -8,6 +8,8 @@ import {
 import './app.css';
 import { POEM } from './poem';
 
+class Example {}
+
 async function* fetchPoem(): AsyncGenerator<string> {
   'use server';
 
@@ -15,6 +17,8 @@ async function* fetchPoem(): AsyncGenerator<string> {
     new Promise<string>(res => {
       setTimeout(res, ms, value);
     });
+
+  yield new Example();
 
   for (const line of POEM.split('\n')) {
     yield await sleep(line, 500);
