@@ -4,26 +4,10 @@ import {
   createEffect,
   createResource,
   createSignal,
+  onCleanup,
 } from 'solid-js';
 import './app.css';
-import { POEM } from './poem';
-
-class Example {}
-
-async function* fetchPoem(): AsyncGenerator<string> {
-  'use server';
-
-  const sleep = (value: string, ms: number) =>
-    new Promise<string>(res => {
-      setTimeout(res, ms, value);
-    });
-
-  yield new Example();
-
-  for (const line of POEM.split('\n')) {
-    yield await sleep(line, 500);
-  }
-}
+import { fetchPoem } from './poem';
 
 interface LineIteratorProps {
   source?: AsyncGenerator<string>;
@@ -59,20 +43,31 @@ export default function App() {
     setTrack({});
   }
 
+  const [count, setCount] = createSignal(0);
+
+  createEffect(() => {
+    const timeout = setInterval(() => setCount(c => c + 1), 1000);
+    onCleanup(() => clearTimeout(timeout));
+  });
+
   return (
-    <main class="poem">
-      <div class="poem-header">
-        <h1 class="poem-title">The Raven</h1>
-        <span class="poem-sub">By: Edgar Allan Poe</span>
-        <button type="button" onClick={start}>
-          Start
-        </button>
-      </div>
-      <div class="poem-body">
-        <Suspense>
-          <LineIterator source={data()} />
-        </Suspense>
-      </div>
-    </main>
+    <div>
+      <h1>Count: {count()}</h1>
+      <h1>tests</h1>
+      <main class="poem">
+        <div class="poem-header">
+          <h1 class="poem-title">The Raven</h1>
+          <span class="poem-sub">By: Edgar Allan Poe</span>
+          <button type="button" onClick={start}>
+            Start
+          </button>
+        </div>
+        <div class="poem-body">
+          <Suspense>
+            <LineIterator source={data()} />
+          </Suspense>
+        </div>
+      </main>
+    </div>
   );
 }

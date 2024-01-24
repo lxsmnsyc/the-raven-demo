@@ -1,4 +1,4 @@
-export const POEM = `Once upon a midnight dreary, while I pondered, weak and weary,
+const POEM = `Once upon a midnight dreary, while I pondered, weak and weary,
 Over many a quaint and curious volume of forgotten lore—
 While I nodded, nearly napping, suddenly there came a tapping,
 As of some one gently rapping, rapping at my chamber door.
@@ -123,3 +123,16 @@ And his eyes have all the seeming of a demon’s that is dreaming,
 And the lamp-light o’er him streaming throws his shadow on the floor;
 And my soul from out that shadow that lies floating on the floor
 Shall be lifted—nevermore!`;
+
+export async function* fetchPoem(): AsyncGenerator<string> {
+  'use server';
+
+  const sleep = (value: string, ms: number) =>
+    new Promise<string>(res => {
+      setTimeout(res, ms, value);
+    });
+
+  for (const line of POEM.split('\n')) {
+    yield await sleep(line, 500);
+  }
+}
